@@ -2,24 +2,24 @@ import sys
 import math
 
 
-def distancia(x1, x2, y1, y2, z1=0, z2=0):
+def distance(x1, x2, y1, y2, z1=0, z2=0):
     """
-    distancia(x1,x2,y1,y2,z1=0,z2=0) -> float
+    distance(x1,x2,y1,y2,z1=0,z2=0) -> float
 
-    Determina a distancia entre dois pontos
+    Set the distance between two points
 
-    Parametros
+    Params
     ----------
-    x1 -> coordenada x do primeiro ponto
-    x2 -> coordenada x do segundo ponto
-    y1 -> coordenada y do primeiro ponto
-    y2 -> coordenada y do segundo ponto
-    z1 -> coordenada z do primeiro ponto (opcional)
-    z2 -> coordenada z do segundo ponto (opcional)
+    x1 -> coordinate x of the first point
+    x2 -> coordinate x of the second point
+    y1 -> coordinate y of the first point
+    y2 -> coordinate y the second point
+    z1 -> coordinate z of the first point (optional)
+    z2 -> coordinate z the second point (optional)
 
-    Retorno
+    Return
     -------
-    float -> numero real
+    float -> real number
     """
     return math.sqrt((x1-x2)**2 + (y1-y2)**2 + (z1-z2)**2)
 
@@ -28,24 +28,23 @@ def convex_hull_index(points, points_index):
     """
     convex_hull_index(points,points_index) -> list
 
-    Encontra os pontos que determinam a caixa minima de 
-    um conjunto de pontos.
-    Retorna uma lista de pontos no sentido anti-horario,
-    juntamente com uma lista de seus respectivos indices.
+    Find the points that determine the minimum box of a set of points.
+    Returns a list of points counterclockwise,
+    along with a list of their respective indices.
 
-    Parametros
+    Params
     ----------
-    points       -> lista de coordenadas dos pontos 
+    points       -> coordinate list of points
                     [[x0,y0],[x1,y1],...,[xn,yn]]
-    points_index -> lista dos indices dos pontos 
+    points_index -> list of point indexes
                     [[idx0,idy1],[idx0,idy1],...,[idxn,idyn]]
 
-    Retorno
+    Return
     -------
-    list_points       -> lista de coordenadas dos pontos 
-                         ordenados no sentido anti-horario
-    list_points_index -> lista de indices dos pontos 
-                         ordenados no sentido anti-horario
+    list_points       -> coordinate list of points
+                         ordered counterclockwise
+    list_points_index -> list of point indexes
+                         ordered counterclockwise
     """
     points_original = points.copy()
 
@@ -90,25 +89,23 @@ def convex_hull(points):
     """
     convex_hull(points) -> list
 
-    Encontra os pontos que determinam a caixa minima de 
-    um conjunto de pontos.
-    Retorna uma lista de pontos no sentido anti-horario
+    Find the points that determine the minimum box of a set of points.
+    Returns a list of points counterclockwise
 
-    Parametros
+    Params
     -----------------------------------------
-    points -> lista de coordenadas dos pontos 
+    points -> coordinate list of points
               [[x0,y0],[x1,y1],...,[xn,yn]]
 
-    Retorno
+    Return
     ----------------------------------------------
-    list_points -> lista de coordenadas dos pontos 
-                   ordenados no sentido anti-horario
+    list_points -> coordinate list of points
+                   ordered counterclockwise
     """
     print('here')
 
     points = sorted(points)
     print(points)
-    #points = sorted(set(points))
 
     if len(points) <= 1:
         return points
@@ -137,35 +134,29 @@ def poly_clockwise(x, y, poly_points):
     """
     poly_clockwise(x, y, poly_points) -> bool
 
-    Determina se os pontos do dado poligono estao
-    orenados no sentido horario
+    Determines whether the points of the given polygon are clockwise
 
-    Parametros
+    Params
     ----------
-    x             -> lista de coordendas x
-    y             -> lista de coordendas y
-    poly_points   -> lista de pontos
+    x             -> list of coordinates x
+    y             -> list of coordinates y
+    poly_points   -> list of points
                      [p0,p1,p2,...,pn]
 
-    Retorno
+    Return
     -------
-    bool -> Esta ou nao ordenado no sentido horario
+    bool -> Is it ordered or not clockwise
     """
 
-    # print(len(x))
-    # print(len(y))
-    # print(len(poly_points))
-    soma = 0
+    sum_output = 0
     for k in range(len(poly_points)-1):
-        # print(k,x[poly_points[k-1]],x[poly_points[k]],x[poly_points[k+1]],y[poly_points[k-1]],y[poly_points[k]],y[poly_points[k+1]])
-        soma += (x[poly_points[k]] - x[poly_points[k-1]]) * \
+        sum_output += (x[poly_points[k]] - x[poly_points[k-1]]) * \
             (y[poly_points[k+1]] - y[poly_points[k-1]])
-        soma -= (x[poly_points[k+1]] - x[poly_points[k-1]]) * \
+        sum_output -= (x[poly_points[k+1]] - x[poly_points[k-1]]) * \
             (y[poly_points[k]] - y[poly_points[k-1]])
-        # print(soma)
 
-    if(soma == 0):
-        print('\n Nao eh um poligono \n')
+    if(sum_output == 0):
+        print('\n It is not a polygon \n')
         sys.exit()
 
-    return True if soma < 0 else False
+    return True if sum_output < 0 else False
