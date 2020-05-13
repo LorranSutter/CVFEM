@@ -44,8 +44,8 @@ def read_msh(arq):
     num_elem_total = int(line)
 
     # Coordinates
-    is_contour = [False for i in range(num_nodes)]
-    num_contours = 0
+    is_boundary = [False for i in range(num_nodes)]
+    num_boundaries = 0
     point_elements = []
     line_elements = []
     tri_elements = []
@@ -59,17 +59,17 @@ def read_msh(arq):
             num_elem_point += 1
             point_elements.append(list(map(int, line[4:])))
             for k in point_elements[-1]:
-                if(not is_contour[k-1]):
-                    is_contour[k-1] = True
-                    num_contours += 1
+                if(not is_boundary[k-1]):
+                    is_boundary[k-1] = True
+                    num_boundaries += 1
 
         elif(line[1] == '1'):
             num_elem_line += 1
             line_elements.append(list(map(int, line[4:])))
             for k in line_elements[-1]:
-                if(not is_contour[k-1]):
-                    is_contour[k-1] = True
-                    num_contours += 1
+                if(not is_boundary[k-1]):
+                    is_boundary[k-1] = True
+                    num_boundaries += 1
 
         elif(line[1] == '2'):
             num_elem_tri += 1
@@ -81,8 +81,8 @@ def read_msh(arq):
             num_nodes,
             x,
             y,
-            num_contours,
-            is_contour,
+            num_boundaries,
+            is_boundary,
             num_elem_total,
             num_elem_point,
             point_elements,
@@ -92,7 +92,7 @@ def read_msh(arq):
             tri_elements]
 
 
-def remove_disconnected(num_nodes, x, y, num_contours, is_contour, num_elem_total, num_elem_point, point_elements, num_elem_line, line_elements, num_elem_tri, tri_elements):
+def remove_disconnected(num_nodes, x, y, num_boundaries, is_boundary, num_elem_total, num_elem_point, point_elements, num_elem_line, line_elements, num_elem_tri, tri_elements):
     '''
     Remove all points that does not have connectivity
     with an element from the domain
@@ -110,11 +110,11 @@ def remove_disconnected(num_nodes, x, y, num_contours, is_contour, num_elem_tota
                 disconnected_points.remove(w)  # Remove connected point
                 if(disconnected_points == []):  # If no point is connected
                     # There is no need to create an updated file
-                    return [False, num_nodes, x, y, num_contours, is_contour, num_elem_total, num_elem_point, point_elements, line_elements, tri_elements]
+                    return [False, num_nodes, x, y, num_boundaries, is_boundary, num_elem_total, num_elem_point, point_elements, line_elements, tri_elements]
 
     # Update the quantity of nodes removing them from disconnected points
     num_nodes -= len(disconnected_points)
-    num_contours -= len(disconnected_points)
+    num_boundaries -= len(disconnected_points)
     num_elem_total -= len(disconnected_points)
     num_elem_point -= len(disconnected_points)
 
@@ -125,7 +125,7 @@ def remove_disconnected(num_nodes, x, y, num_contours, is_contour, num_elem_tota
     for k in disconnected_points:
         x.pop(k-1)
         y.pop(k-1)
-        is_contour.pop(k-1)
+        is_boundary.pop(k-1)
 
     x = np.array(x)
     y = np.array(y)
@@ -145,10 +145,10 @@ def remove_disconnected(num_nodes, x, y, num_contours, is_contour, num_elem_tota
                     tri_elements[k][p] -= 1
 
     # There is a need to create an updated file
-    return [num_nodes, x, y, num_contours, is_contour, num_elem_total, num_elem_point, point_elements, line_elements, tri_elements]
+    return [num_nodes, x, y, num_boundaries, is_boundary, num_elem_total, num_elem_point, point_elements, line_elements, tri_elements]
 
 
-def element_to_support(num_elem_tri, line_elements, tri_elements, x, y, num_nodes, is_contour):
+def element_to_support(num_elem_tri, line_elements, tri_elements, x, y, num_nodes, is_boundary):
     '''
     Transform the list of elements into a support matrix
     '''
@@ -163,13 +163,13 @@ def element_to_support(num_elem_tri, line_elements, tri_elements, x, y, num_node
 
     S_temp = S.copy()
 
-    S = organizes_supports(S, x, y, num_nodes, is_contour)
-    B = contour_matrix(line_elements, x, y)
+    S = organizes_supports(S, x, y, num_nodes, is_boundary)
+    B = boundary_matrix(line_elements, x, y)
 
     return [S, S_temp, B]
 
 
-def organizes_supports(S, x, y, num_nodes, is_contour):
+def organizes_supports(S, x, y, num_nodes, is_boundary):
     '''
     Sorts the supports of the nodes counterclockwise
     '''
@@ -181,8 +181,8 @@ def organizes_supports(S, x, y, num_nodes, is_contour):
         [points, points_index] = geometry.convex_hull_index(
             points, points_index)
 
-        if(is_contour[k]):
-            points_index = sort_contour_supports(points_index)
+        if(is_boundary[k]):
+            points_index = sort_boundary_supports(points_index)
             points_index.append(0)
         else:
             points_index.append(points_index[0])
@@ -192,32 +192,32 @@ def organizes_supports(S, x, y, num_nodes, is_contour):
     return S_list
 
 
-def sort_contour_supports(points_index):
+def sort_boundary_supports(points_index):
     '''
     Sorts the supports of the nodes counterclockwise according to Voller criteria.
-    You need to start counting from a point on the contour and the path must be within the domain
+    You need to start counting from a point on the boundary and the path must be within the domain
     '''
     if(len(points_index) == 2):
         return points_index
-    elif(is_contour[int(points_index[0]-1)] and is_contour[int(points_index[-1]-1)]):
+    elif(is_boundary[int(points_index[0]-1)] and is_boundary[int(points_index[-1]-1)]):
         return points_index
     else:
         for _ in range(len(points_index)+1):
             points_index.append(points_index.pop(0))
-            if(is_contour[int(points_index[0]-1)] and is_contour[int(points_index[-1]-1)]):
+            if(is_boundary[int(points_index[0]-1)] and is_boundary[int(points_index[-1]-1)]):
                 return points_index
         print('There is something wrong with the file')
         print('Stopped in: ', points_index)
         sys.exit(1)
 
 
-def contour_matrix(line_elements, x, y):
+def boundary_matrix(line_elements, x, y):
     '''
-    Creates contour matrix
+    Creates boundary matrix
     '''
-    B = []                # Contour matrix
-    B_aux = []            # Aux contour matrix
-    num_entity_arr = []   # Array that stores the entity number of each contour
+    B = []                # Boundary matrix
+    B_aux = []            # Aux boundary matrix
+    num_entity_arr = []   # Array that stores the entity number of each boundary
 
     # Init arrays
     for k in line_elements:
@@ -226,7 +226,7 @@ def contour_matrix(line_elements, x, y):
             B.append([])
             B_aux.append([])
 
-    # Fill B_aux with the pairs of nodes of each contour line elements
+    # Fill B_aux with the pairs of nodes of each boundary line elements
     for k in line_elements:
         B_aux[num_entity_arr.index(k[0])].append(k[1:])
 
@@ -284,11 +284,11 @@ def contour_matrix(line_elements, x, y):
         index_B_aux = 0
         index_B += 1
 
-    # Turns the contour matrix into an one-dimensional array
-    contour_points = [w for k in B for w in k[1:]]
+    # Turns the boundary matrix into an one-dimensional array
+    boundary_points = [w for k in B for w in k[1:]]
 
-    # Inverts the contour if clockwise
-    if(geometry.poly_clockwise(x, y, contour_points)):
+    # Inverts the boundary if clockwise
+    if(geometry.poly_clockwise(x, y, boundary_points)):
         for k in B:
             k.reverse()
         B.reverse()
@@ -328,8 +328,8 @@ arq = sys.argv[1]
  num_nodes,
  x,
  y,
- num_contours,
- is_contour,
+ num_boundaries,
+ is_boundary,
  num_elem_total,
  num_elem_point,
  point_elements,
@@ -342,19 +342,19 @@ arq = sys.argv[1]
 [num_nodes,
  x,
  y,
- num_contours,
- is_contour,
+ num_boundaries,
+ is_boundary,
  num_elem_total,
  num_elem_point,
  point_elements,
  line_elements,
  tri_elements
- ] = remove_disconnected(num_nodes, x, y, num_contours, is_contour, num_elem_total, num_elem_point, point_elements, num_elem_line, line_elements, num_elem_tri, tri_elements)
+ ] = remove_disconnected(num_nodes, x, y, num_boundaries, is_boundary, num_elem_total, num_elem_point, point_elements, num_elem_line, line_elements, num_elem_tri, tri_elements)
 
 [S,
  S_temp,
  B
- ] = element_to_support(num_elem_tri, line_elements, tri_elements, x, y, num_nodes, is_contour)
+ ] = element_to_support(num_elem_tri, line_elements, tri_elements, x, y, num_nodes, is_boundary)
 
 n_s = [len(i)-1 for i in S]
 n_b = [len(i) for i in B]
