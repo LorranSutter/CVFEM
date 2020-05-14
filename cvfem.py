@@ -328,7 +328,7 @@ if __name__ == "__main__":
     for k in range(pout):
         ana[k] = (math.exp(xout[k]) - math.exp(2))/(math.exp(1) - math.exp(2))
 
-    plt.plot(xout, ana, 'rd', label='Analitic')
+    plt.plot(xout, ana, 'rd', label='Analytical')
     plt.plot(xout, phiout, 'bo', label='Numerical')
     plt.title('$\phi$ value as a function of radial position')
     plt.legend(loc='best')
