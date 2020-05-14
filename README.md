@@ -46,11 +46,17 @@ Where *ai* and *aij* are the coefficients of the linear system of equations for 
 
 The case studied is a steady state advection-diffusion problem withoud sources. The domain geometry is a quarter of a circular crown, and considering a field of velocities and diffusivity varying radially and not including sources, the problem can be solved analytically for comparison criteria:
 
-<div style='display:flex; justify-content:space-evenly; align-items:center'>
+<!-- <div style='display:flex; justify-content:space-evenly; align-items:center'> -->
 
-<img src='https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2}'/>
+<div align="center">
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg' height=150/>
+<!-- <img src='https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2}'/>
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg' height=150/> -->
+
+![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2})
+
+![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg)
 
 </div>
 
@@ -58,7 +64,7 @@ The case studied is a steady state advection-diffusion problem withoud sources. 
 
 <!-- ![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2})
 
-![Domain](https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg) -->
+![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg) -->
 
 <!-- \frac{\partial v_x\phi}{\partial x} + \frac{\partial v_y\phi}{\partial y} - \frac{\partial}{\partial x}\left( \kappa \frac{\partial \phi}{\partial x} \right) - \frac{\partial}{\partial y}\left( \kappa \frac{\partial \phi}{\partial y} \right) = 0 -->
 
