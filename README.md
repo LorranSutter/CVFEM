@@ -50,13 +50,14 @@ The case studied is a steady state advection-diffusion problem withoud sources. 
 
 <div align="center">
 
-<!-- <img src='https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2}'/>
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1589497575/EquationAndDomain.svg'/>
 
-<img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg' height=150/> -->
 
-![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2})
+<!-- ![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2}) -->
 
-![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg)
+<!-- ![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg) -->
+
+<!-- <img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg' height=150/> -->
 
 </div>
 
