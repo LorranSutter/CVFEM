@@ -330,5 +330,6 @@ if __name__ == "__main__":
 
     plt.plot(xout, ana, 'rd', label='Analitic')
     plt.plot(xout, phiout, 'bo', label='Numerical')
+    plt.title('$\phi$ value as a function of radial position')
     plt.legend(loc='best')
     plt.show()
