@@ -102,7 +102,7 @@ python3 cvfem.py outputMesh.dat
 - Voller, Vaughan R, *Basic control volume finite element methods for fluids and solids*
 - Versteeg, Henk Kaarle and Malalasekera, Weeratunge, *An introduction to computational fluid dynamics: The Finite Volume Method*
 
-## :Computer: Technologies
+## :computer: Technologies
 
 - [Python](https://www.python.org/)
 - [NumPy](https://numpy.org/)
