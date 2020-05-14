@@ -43,44 +43,29 @@ This process is employed in the discretization of this equation generating a lin
 
 Where *ai* and *aij* are the coefficients of the linear system of equations for the variable *phi*, and *bi* represents all source, transient and boundary terms contributions.
 
+The figure bellow illustrates the relationship of a node *i* with its adjacent nodes in the support matrix *Sij* and its CV:
+
+<div align="center">
+
+<img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420190/ControlVolume.svg' height=200>
+
+</div>
 
 The case studied is a steady state advection-diffusion problem withoud sources. The domain geometry is a quarter of a circular crown, and considering a field of velocities and diffusivity varying radially and not including sources, the problem can be solved analytically for comparison criteria:
-
-<!-- <div style='display:flex; justify-content:space-evenly; align-items:center'> -->
 
 <div align="center">
 
 <img src='https://res.cloudinary.com/lorransutter/image/upload/v1589497575/EquationAndDomain.svg'/>
 
-
-<!-- ![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2}) -->
-
-<!-- ![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg) -->
-
-<!-- <img src='https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg' height=150/> -->
-
 </div>
 
-![Solution](https://res.cloudinary.com/lorransutter/image/upload/v1589496924/CVFEM_solution.svg)
+Finally, follow the numerical solution compared to analytical solution:
 
-<!-- ![Equation](https://render.githubusercontent.com/render/math?math=$\phi=\frac{e^r-e^2}{e-e^2})
+<div align="center">
 
-![Domain](https://res.cloudinary.com/lorransutter/image/upload/c_scale,h_150/v1589420342/Domain.svg) -->
+![Solution](https://res.cloudinary.com/lorransutter/image/upload/v1589497916/CVFEM_solution.svg)
 
-<!-- \frac{\partial v_x\phi}{\partial x} + \frac{\partial v_y\phi}{\partial y} - \frac{\partial}{\partial x}\left( \kappa \frac{\partial \phi}{\partial x} \right) - \frac{\partial}{\partial y}\left( \kappa \frac{\partial \phi}{\partial y} \right) = 0 -->
-
-<!-- \frac{\partial \phi}{\partial r} = \frac{\partial^2 \phi}{\partial r^2} -->
-
-<!-- v = \frac{1}{r} -->
-
-<!-- \kappa = \frac{1}{r} -->
-
-<!-- R_{in} \leqslant R_{out} -->
-
-
-<!-- ![Domain](https://res.cloudinary.com/lorransutter/image/upload/v1589420342/Domain.svg) -->
-
-<!-- ![Control Volume](https://res.cloudinary.com/lorransutter/image/upload/v1589420190/ControlVolume.svg) -->
+</div>
 
 ## :pencil: Dependencies
 
@@ -89,6 +74,28 @@ Besides, of course, [Python](https://www.python.org/), you will need [NumPy](htt
 Also, if you want to generate your own mesh you may use the free mesh generator [Gmsh](https://gmsh.info/).
 
 ## :runner: How to run
+
+After install <a href="#pencil-dependencies">dependencies</a>, open your terminal in the folder you want to clone the project:
+
+```sh
+# Clone this repo
+git clone https://github.com/LorranSutter/CVFEM.git
+
+# Go to the project folder
+cd CVFEM
+```
+
+The following command read a .msh file generate by Gmsh to be read by the solver code:
+
+```sh
+python3 readGmsh.py mesh.msh
+```
+
+Then, run the solver code having the output of the previous code as an input:
+
+```sh
+python3 cvfem.py outputMesh.dat
+```
 
 ## :book: References
 
