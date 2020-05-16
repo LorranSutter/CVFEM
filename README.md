@@ -11,8 +11,8 @@
     <a href="#pushpin-problem-presentation">Problem presentation</a>&nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="#pencil-dependencies">Dependencies</a>&nbsp;&nbsp;|&nbsp;&nbsp;
     <a href="#runner-how-to-run">How to run</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <a href="#book-references">References</a>&nbsp;&nbsp;|&nbsp;&nbsp;
-    <a href="#computer-technologies">Technologies</a>&nbsp;&nbsp;
+    <a href="#computer-technologies">Technologies</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="#book-references">References</a>&nbsp;&nbsp;
 </p>
 
 ## :pencil2: What is CVFEM?
@@ -97,14 +97,14 @@ Then, run the solver code having the output of the previous code as an input:
 python3 cvfem.py outputMesh.dat
 ```
 
-## :book: References
-
-- Voller, Vaughan R, *Basic control volume finite element methods for fluids and solids*
-- Versteeg, Henk Kaarle and Malalasekera, Weeratunge, *An introduction to computational fluid dynamics: The Finite Volume Method*
-
 ## :computer: Technologies
 
 - [Python](https://www.python.org/)
 - [NumPy](https://numpy.org/)
 - [Matplotlib](https://matplotlib.org/)
 - [Gmsh](https://gmsh.info/)
+
+## :book: References
+
+- Voller, Vaughan R, *Basic control volume finite element methods for fluids and solids*
+- Versteeg, Henk Kaarle and Malalasekera, Weeratunge, *An introduction to computational fluid dynamics: The Finite Volume Method*
