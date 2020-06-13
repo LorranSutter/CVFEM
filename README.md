@@ -99,10 +99,10 @@ python3 cvfem.py outputMesh.dat
 
 ## :computer: Technologies
 
-- [Python](https://www.python.org/)
-- [NumPy](https://numpy.org/)
-- [Matplotlib](https://matplotlib.org/)
-- [Gmsh](https://gmsh.info/)
+- [Python](https://www.python.org/) - interpreted, high-level, general-purpose programming language
+- [NumPy](https://numpy.org/) - general-purpose array-processing package
+- [Matplotlib](https://matplotlib.org/) - plotting library for the Python
+- [Gmsh](https://gmsh.info/) - three-dimensional finite element mesh generator
 
 ## :book: References
 
