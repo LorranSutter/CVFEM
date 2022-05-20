@@ -29,7 +29,7 @@ In this problem, CVFEM was used to obtain the discrete form of the conservation 
 
 <div align="center">
 
-![Equation](https://render.githubusercontent.com/render/math?math=$\frac{d}{dt}\int_{V}\phi%20dV-\int_{V}Q%20dV-\int_{A}\kappa\nabla\phi\cdot\boldsymbol{n}dA%2B\int_{A}\(\boldsymbol{v}\cdot%20\boldsymbol{n}\)\phi%20dA=0)
+$$\frac{d}{dt}\int_{V}\phi dV \ - \ \int_{V}Q dV \ - \ \int_{A}\kappa\nabla\phi\cdot\boldsymbol{n}dA \ + \ B\int_{A}\(\boldsymbol{v}\cdot \boldsymbol{n}\)\phi dA \ = \ 0$$
 
 </div>
 
@@ -37,13 +37,13 @@ This process is employed in the discretization of this equation generating a lin
 
 <div align="center">
 
-![Equation](https://render.githubusercontent.com/render/math?math=$a_{i}\phi_{i}=\sum_{j=1}^{n_i}a_{i,j}\phi_{S_{i,j}}%2Bb_i)
+$$a_{i}\phi_{i} \ = \ \sum_{j=1}^{n_i}a_{i,j}\phi_{S_{i,j}} \ + \ b_i$$
 
 </div>
 
-Where *ai* and *aij* are the coefficients of the linear system of equations for the variable *phi*, and *bi* represents all source, transient and boundary terms contributions.
+Where $a_i$ and $a_{ij}$ are the coefficients of the linear system of equations for the variable $\phi$, and $b_i$ represents all source, transient and boundary terms contributions.
 
-The figure bellow illustrates the relationship of a node *i* with its adjacent nodes in the support matrix *Sij* and its CV:
+The figure bellow illustrates the relationship of a node $i$ with its adjacent nodes in the support matrix $S_{ij}$ and its CV:
 
 <div align="center">
 
